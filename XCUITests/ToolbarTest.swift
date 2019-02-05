@@ -123,11 +123,6 @@ class ToolbarTests: BaseTestCase {
         XCTAssertTrue(topElement.isHittable)
     }
 
-    func testShowToolbarWhenScrollingDefaultOption() {
-        navigator.goto(SettingsScreen)
-        // Check that the setting is off by default
-        XCTAssertFalse(app.cells.switches["AlwaysShowToolbar"].isSelected)
-    }
 
     func testShowDoNotShowToolbarWhenScrollingPortrait() {
         XCUIDevice.shared.orientation = UIDeviceOrientation.portrait
