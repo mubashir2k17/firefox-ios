@@ -175,6 +175,9 @@ class Action {
     static let AcceptClearAllWebsiteData = "AcceptClearAllWebsiteData"
     static let TapOnFilterWebsites = "TapOnFilterWebsites"
     static let ShowMoreWebsiteDataEntries = "ShowMoreWebsiteDataEntries"
+    
+    static let ClearTodayHistory = "ClearTodayHistory"
+    static let ClearLastHourHistory = "ClearLastHourHistory"
 
     static let ToggleTrackingProtectionPerTabEnabled = "ToggleTrackingProtectionPerTabEnabled"
     static let ToggleTrackingProtectionSettingOnNormalMode = "ToggleTrackingProtectionSettingAlwaysOn"
@@ -483,6 +486,15 @@ func createScreenGraph(for test: XCTestCase, with app: XCUIApplication) -> MMScr
         screenState.press(app.tables["History List"].cells.element(boundBy: 2), to: HistoryPanelContextMenu)
         screenState.tap(app.cells["HistoryPanel.recentlyClosedCell"], to: HistoryRecentlyClosed)
         screenState.tap(app.buttons["Done"], to: HomePanelsScreen)
+        screenState.gesture(forAction: Action.ClearLastHourHistory) { userState in
+            app.tables["History List"].staticTexts["Clear Recent History…"].tap()
+            app.sheets["Clearing Recent History will remove history, cookies, and other browser data."].buttons["The Last Hour"].tap()
+        }
+        screenState.gesture(forAction: Action.ClearTodayHistory) { userState in
+            app.tables["History List"].staticTexts["Clear Recent History…"].tap()
+            app.sheets["Clearing Recent History will remove history, cookies, and other browser data."].buttons["Today"].tap()
+        }
+        screenState.backAction = navigationControllerBackAction
     }
 
     map.addScreenState(HomePanel_ReadingList) { screenState in

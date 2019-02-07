@@ -5,11 +5,15 @@
 import XCTest
 
 let webpage = ["url": "www.mozilla.org", "label": "Internet for people, not profit — Mozilla", "value": "mozilla.org"]
+let allWebpages = ["url1": "www.mozilla.org", "label1": "Internet for people, not profit — Mozilla", "value1": "mozilla.org",
+                "url2": "www.twitter.org", "label2": "Twitter", "value2": "twitter.com",
+                "url3": "www.youtube.com", "label3": "Home - YouTube", "value3": "youtube.com"]
+let allHistoryEntrys = ["label1", "label2", "label3"]
 // This is part of the info the user will see in recent closed tabs once the default visited website (https://www.mozilla.org/en-US/book/) is closed
 let closedWebPageLabel = "localhost:\(serverPort)/test-fixture/test-mozilla-book.html"
 
 class HistoryTests: BaseTestCase {
-    let testWithDB = ["testOpenHistoryFromBrowserContextMenuOptions", "testClearHistoryFromSettings"]
+    let testWithDB = ["testOpenHistoryFromBrowserContextMenuOptions", "testClearHistoryFromSettings", "testClearRecentHistory"]
 
     // This DDBB contains those 4 websites listed in the name
     let historyDB = "browserYoutubeTwitterMozillaExample.db"
@@ -226,5 +230,19 @@ class HistoryTests: BaseTestCase {
         navigator.goto(HomePanel_History)
         XCTAssertFalse(app.cells.staticTexts["Recently Closed"].isSelected)
         waitForNoExistence(app.tables["Recently Closed Tabs List"])
+    }
+
+    func testClearRecentHistory() {
+        navigator.performAction(Action.ClearLastHourHistory)
+        for label in allHistoryEntrys {
+            XCTAssertTrue(app.tables.cells.staticTexts[allWebpages[label]!].exists)
+        }
+        navigator.openURL("google.com")
+        navigator.goto(HomePanel_History)
+        XCTAssertTrue(app.tables.cells.staticTexts["Google"].exists)
+        navigator.performAction(Action.ClearTodayHistory)
+        for label in allHistoryEntrys {
+            XCTAssertTrue(app.tables.cells.staticTexts[allWebpages[label]!].exists)
+        }
     }
 }
