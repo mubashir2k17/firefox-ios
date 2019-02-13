@@ -6,7 +6,7 @@ import Foundation
 import Storage
 import EarlGrey
 @testable import Client
-
+/*
 class LoginManagerTests: KIFTestCase {
 
     fileprivate var webRoot: String!
@@ -727,5 +727,5 @@ class LoginManagerTests: KIFTestCase {
 
         closeLoginManager()
     }
-}
+}*/
 

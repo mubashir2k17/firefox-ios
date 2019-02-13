@@ -5,7 +5,7 @@
 import Foundation
 import EarlGrey
 @testable import Client
-
+/*
 class LoginInputTests: KIFTestCase {
     fileprivate var webRoot: String!
     fileprivate var profile: Profile!
@@ -122,4 +122,4 @@ class LoginInputTests: KIFTestCase {
         tester().tapWebViewElementWithAccessibilityLabel("submit_btn")
         waitForLoginDialog(text: "Save login \(username) for \(self.webRoot!)?", appears: false)
     }
-}
+}*/
